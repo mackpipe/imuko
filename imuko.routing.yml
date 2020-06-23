@@ -1,0 +1,31 @@
+imuko.usuario_formulario:
+  path: '/usuario/registro'
+  defaults:
+    _form: '\Drupal\imuko\Form\UsuarioFormulario'
+    _title: 'Usuario Formulario'
+  requirements:
+    _permission: 'registro usuario'
+
+imuko.usuario_importar:
+  path: '/usuario/importar'
+  defaults:
+    _form: '\Drupal\imuko\Form\UsuarioImportar'
+    _title: 'Usuario Importar'
+  requirements:
+    _permission: 'importar usuarios'
+
+imuko.usuario_consulta:
+  path: '/usuario/consulta'
+  defaults:
+    _controller: '\Drupal\imuko\Controller\ListadoUsuarioController::display'
+    _title: 'Listado usuarios'
+  requirements:
+    _permission: 'consulta usuario'
+
+imuko.usuario_consulta_excel:
+  path: '/usuario/consulta/excel'
+  defaults:
+    _controller: '\Drupal\imuko\Controller\ExportaUsuarioController::download'
+    _title: 'Exporta usuarios'
+  requirements:
+    _permission: 'consulta usuario'

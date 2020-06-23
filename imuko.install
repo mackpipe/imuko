@@ -1,0 +1,94 @@
+<?php
+
+/*
+ * @file
+ * Schema for create user and log transaccions.
+ */
+
+const MYUSERS = 'myusers';
+const LOGS = 'logs';
+
+/**
+ * Implements hook_install().
+ */
+function imuko_install()
+{
+  // create our database schema:
+  drupal_install_schema(MYUSERS);
+  drupal_install_schema(LOGS);
+}
+
+
+/**
+ * Implements hook_uninstall().
+ */
+function imuko_uninstall(){
+  // delete our database schema:
+  drupal_uninstall_schema(MYUSERS);
+  drupal_uninstall_schema(LOGS);
+}
+
+/**
+ * Implements hook_schema().
+ */
+function imuko_schema(){
+  $schema = [];
+  // Definicion de esquema para la tabla myusers
+  $schema[MYUSERS] = [
+    'descripton' => 'Almacena los usuarios creados desde el formulario',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'description' => 'id',
+        'not null' => TRUE
+      ],
+      'name' => [
+        'type' => 'varchar',
+        'length' => 60,
+        'not null' => TRUE,
+      ],
+      'date_created' => [
+        'mysql_type' => 'timestamp',
+        'not null' => TRUE,
+        'mysql_default' => CURRENT_TIMESTAMP,
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+  // Definicion de esquema para la tabla logs
+  $schema[LOGS] = [
+    'description' => 'Almacena el registro de logs para procesos de login y registro',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'description' => 'id',
+        'not null' => TRUE
+      ],
+      'uid' => [
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+      'type_log' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'date_created' => [
+        'mysql_type' => 'timestamp',
+        'not null' => TRUE,
+        'mysql_default' => CURRENT_TIMESTAMP,
+      ],
+      'ip' => [
+        'type' => 'varchar',
+        'length' => 30,
+        'not null' => TRUE
+      ],
+    ],
+    'primary key' => ['id'],
+
+  ];
+  return $schema;
+}
+
+
+

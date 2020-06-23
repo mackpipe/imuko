@@ -1,0 +1,5 @@
+name: 'Imuko test'
+type: module
+description: 'Modulo para pruebas de creacion de usuarios'
+core: 8.x
+package: 'Custom'

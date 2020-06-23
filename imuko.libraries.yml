@@ -1,0 +1,8 @@
+imuko-library:
+  js:
+    js/jquery.validate.min.js: {}
+    js/imuko.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal.ajax
+    - core/drupal.dialog.ajax

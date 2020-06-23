@@ -1,0 +1,13 @@
+{
+    "name": "imuko",
+    "type": "drupal-module",
+    "description": "modulo de pruebas para imuko",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/imuko",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/imuko",
+        "source": "http://cgit.drupalcode.org/imuko",
+    },
+}
