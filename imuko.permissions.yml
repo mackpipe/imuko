@@ -1,0 +1,9 @@
+registro usuario:
+  title: 'Registro Usuario'
+  description: 'Permite acceder al formulario de creacion de usuario'
+consulta usuario:
+  title: 'Consulta Usuario'
+  description: 'Permite consultar los usuarios de misusers'
+importar usuarios:
+  title: 'Importa Usuarios'
+  description: 'Permite importar usuarios en myusers'

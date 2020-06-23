@@ -1,0 +1,80 @@
+<?php
+
+/**
+ * @file
+ * Contains imuko.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_help().
+ */
+function imuko_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the imuko module.
+    case 'help.page.imuko':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('modulo de pruebas para imuko') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function imuko_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Se incluye la biblioteca que incluye los javascript necesarios para
+  // el formulario de creacion de usuario
+  if ($form['#id'] == 'usuario-formulario') {
+    $form['#attached']['library'][] = "imuko/imuko-library";
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function imuko_user_insert(\Drupal\user\UserInterface $user) {
+  // Se obtiene el uid del usuario registrado
+  $uid= $user->id();
+  // Se obtiene la direccion ip del cliente
+  $ip= Drupal::request()->getClientIp();
+  // Se registra en la tabla de logs
+  db_insert('logs')
+    ->fields(array(
+      'ip' => $ip,
+      'type_log' => "registro",
+      'uid' => $uid,
+    ))
+    ->execute();
+    drupal_set_message('Registro en Logs para proceso de "registro" ');
+}
+
+/**
+ * Implements hook_user_login_form_alter().
+ */
+function imuko_form_user_login_form_alter(&$form, FormStateInterface $form_state) {
+  $form['#submit'][] = '_imuko_custom_submit';
+}
+
+/**
+ * Custom submit for login.
+ */
+function _imuko_custom_submit(&$form, FormStateInterface $form_state) {
+  // Se obtiene el usuario con el nombre
+  $user = user_load_by_name('admin');
+  $uid=$user->id();
+  // Se registra en la tabla de log
+  db_insert('logs')
+    ->fields(array(
+      'ip' => Drupal::request()->getClientIp(),
+      'type_log' => "login",
+      'uid' => $uid,
+    ))
+    ->execute();
+  drupal_set_message('Registro en Logs para proceso de "login" ');
+}
